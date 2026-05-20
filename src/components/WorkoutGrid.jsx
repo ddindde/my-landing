@@ -1,170 +1,80 @@
 import { useState } from "react";
 import { workouts } from "../data/workouts";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
+// 더미 데이터는 컴포넌트 바깥에 — workouts.js에서 import
+
+// ── 자식 컴포넌트 ──
 function WorkoutCard({ workout, onClick }) {
   return (
-    <article
+    <Card
       onClick={onClick}
-      style={{
-        cursor: "pointer",
-        background: "#111111",
-        borderRadius: "16px",
-        padding: "24px",
-        border: "1px solid rgba(255,255,255,0.08)",
-        transition: "all 0.2s",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-        position: "relative",
-        overflow: "hidden",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-4px)";
-        e.currentTarget.style.borderColor = "rgba(57,255,20,0.3)";
-        e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.4)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-        e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
-      }}
+      className="cursor-pointer bg-[#111111] border border-white/8 hover:border-[#39FF14]/30 hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
     >
-      {/* 상단 날짜 + 이모지 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.72rem",
-            color: "#39FF14",
-            letterSpacing: "0.08em",
-            fontWeight: "500",
-          }}
-        >
-          {workout.date}
-        </span>
-        <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>
-          {workout.condition.split(" ")[0]}
-        </span>
-      </div>
-
-      {/* 제목 */}
-      <h3
-        style={{
-          fontSize: "1.1rem",
-          fontWeight: "700",
-          color: "#FFFFFF",
-          marginBottom: "8px",
-        }}
-      >
-        {workout.title}
-      </h3>
-
-      {/* 운동 목록 */}
-      <p
-        style={{
-          fontSize: "0.8rem",
-          color: "#A0A0A0",
-          marginBottom: "20px",
-          lineHeight: 1.6,
-        }}
-      >
-        {workout.exercises.map((e) => e.name).join(" · ")}
-      </p>
-
-      {/* 구분선 + 태그 */}
-      <div
-        style={{
-          borderTop: "1px solid rgba(255,255,255,0.08)",
-          paddingTop: "16px",
-          display: "flex",
-          gap: "8px",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.72rem",
-            background: "rgba(57,255,20,0.1)",
-            color: "#39FF14",
-            padding: "5px 12px",
-            borderRadius: "6px",
-            fontWeight: "600",
-            border: "1px solid rgba(57,255,20,0.2)",
-          }}
-        >
-          볼륨 {workout.volume.toLocaleString()}kg
-        </span>
-        <span
-          style={{
-            fontSize: "0.72rem",
-            background: "rgba(255,255,255,0.05)",
-            color: "#A0A0A0",
-            padding: "5px 12px",
-            borderRadius: "6px",
-            fontWeight: "500",
-            border: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
-          {workout.duration}분
-        </span>
-      </div>
-    </article>
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-center mb-1">
+          <span className="text-xs font-semibold tracking-wide text-[#39FF14]">
+            {workout.date}
+          </span>
+          <span className="text-xl leading-none">
+            {workout.condition.split(" ")[0]}
+          </span>
+        </div>
+        <CardTitle className="text-white text-lg">{workout.title}</CardTitle>
+        <CardDescription className="text-[#A0A0A0] text-sm">
+          {workout.exercises.map((e) => e.name).join(" · ")}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex gap-2 pt-2 border-t border-white/8">
+          <Badge className="bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 hover:bg-[#39FF14]/20 text-xs">
+            볼륨 {workout.volume.toLocaleString()}kg
+          </Badge>
+          <Badge className="bg-white/5 text-[#A0A0A0] border border-white/8 hover:bg-white/10 text-xs">
+            {workout.duration}분
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
+// ── 부모 컴포넌트 ──
 export default function WorkoutGrid() {
   const [selected, setSelected] = useState(null);
 
   return (
-    <section
-      style={{
-        background: "#0A0A0A",
-        padding: "80px 24px 60px",
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <section className="bg-[#0A0A0A] py-20 px-6 border-t border-white/8">
+      <div className="max-w-[1200px] mx-auto">
         {/* 헤더 */}
-        <div style={{ marginBottom: "40px" }}>
-          <p
-            style={{
-              fontSize: "0.68rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "#39FF14",
-              marginBottom: "8px",
-              fontWeight: "600",
-            }}
-          >
+        <div className="mb-10">
+          <p className="text-xs tracking-widest uppercase text-[#39FF14] font-semibold mb-2">
             Muscle Archive
           </p>
-          <h2
-            style={{
-              fontSize: "2.4rem",
-              fontWeight: "900",
-              color: "#FFFFFF",
-              marginBottom: "8px",
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <h2 className="text-4xl font-black text-white tracking-tight mb-2">
             운동 기록
           </h2>
-          <p style={{ color: "#A0A0A0", fontSize: "0.9rem" }}>
+          <p className="text-[#A0A0A0] text-sm">
             카드를 클릭하면 상세 내용을 볼 수 있어요.
           </p>
         </div>
 
-        {/* 카드 그리드 */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "16px",
-          }}
-        >
+        {/* 카드 그리드 — workouts.map() */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {workouts.map((workout) => (
             <WorkoutCard
               key={workout.id}
@@ -175,141 +85,44 @@ export default function WorkoutGrid() {
         </div>
       </div>
 
-      {/* 모달 */}
-      {selected && (
-        <div
-          onClick={() => setSelected(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.85)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 50,
-            padding: "16px",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              background: "#111111",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: "24px",
-              padding: "32px",
-              maxWidth: "440px",
-              width: "100%",
-              boxShadow: "0 32px 64px rgba(0,0,0,0.6)",
-            }}
-          >
-            {/* 모달 헤더 */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "24px",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    marginBottom: "6px",
-                  }}
-                >
-                  <span style={{ fontSize: "1.6rem", lineHeight: 1 }}>
-                    {selected.condition.split(" ")[0]}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "0.72rem",
-                      color: "#39FF14",
-                      fontWeight: "600",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    {selected.date}
-                  </span>
-                </div>
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: "700",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {selected.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.82rem",
-                    color: "#A0A0A0",
-                    marginTop: "3px",
-                  }}
-                >
-                  {selected.condition.split(" ").slice(1).join(" ")}
-                </p>
-              </div>
-              <button
-                onClick={() => setSelected(null)}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  fontSize: "1rem",
-                  color: "#A0A0A0",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                ×
-              </button>
+      {/* Dialog — 부모에서 selected 상태로 제어 */}
+      <Dialog
+        open={!!selected}
+        onOpenChange={(open) => !open && setSelected(null)}
+      >
+        <DialogContent className="bg-[#111111] border border-white/10 text-white max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl leading-none">
+                {selected?.condition.split(" ")[0]}
+              </span>
+              <span className="text-xs text-[#39FF14] font-semibold tracking-wide">
+                {selected?.date}
+              </span>
             </div>
+            <DialogTitle className="text-white text-xl">
+              {selected?.title}
+            </DialogTitle>
+            <DialogDescription className="text-[#A0A0A0]">
+              {selected?.condition.split(" ").slice(1).join(" ")}
+            </DialogDescription>
+          </DialogHeader>
 
-            {/* 운동 목록 */}
-            <p
-              style={{
-                fontSize: "0.65rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "#39FF14",
-                marginBottom: "12px",
-                fontWeight: "600",
-              }}
-            >
+          {/* 운동 목록 */}
+          <div>
+            <p className="text-xs uppercase tracking-widest text-[#39FF14] font-semibold mb-3">
               운동 목록
             </p>
-            <div style={{ marginBottom: "20px" }}>
-              {selected.exercises.map((ex, i) => (
+            <div className="space-y-1 mb-5">
+              {selected?.exercises.map((ex, i) => (
                 <div
                   key={i}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "12px 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.06)",
-                  }}
+                  className="flex justify-between items-center py-3 border-b border-white/6"
                 >
-                  <span
-                    style={{
-                      fontSize: "0.9rem",
-                      fontWeight: "600",
-                      color: "#FFFFFF",
-                    }}
-                  >
+                  <span className="text-sm font-semibold text-white">
                     {ex.name}
                   </span>
-                  <span style={{ fontSize: "0.82rem", color: "#A0A0A0" }}>
+                  <span className="text-sm text-[#A0A0A0]">
                     {ex.weight > 0 ? `${ex.weight}kg × ` : ""}
                     {ex.sets}세트 × {ex.reps}회
                   </span>
@@ -318,70 +131,29 @@ export default function WorkoutGrid() {
             </div>
 
             {/* 통계 */}
-            <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  background: "rgba(57,255,20,0.1)",
-                  color: "#39FF14",
-                  padding: "6px 14px",
-                  borderRadius: "6px",
-                  fontWeight: "600",
-                  border: "1px solid rgba(57,255,20,0.2)",
-                }}
-              >
-                총 볼륨 {selected.volume.toLocaleString()}kg
-              </span>
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  background: "rgba(255,255,255,0.05)",
-                  color: "#A0A0A0",
-                  padding: "6px 14px",
-                  borderRadius: "6px",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                {selected.duration}분
-              </span>
+            <div className="flex gap-2 mb-4">
+              <Badge className="bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 text-xs">
+                총 볼륨 {selected?.volume.toLocaleString()}kg
+              </Badge>
+              <Badge className="bg-white/5 text-[#A0A0A0] border border-white/8 text-xs">
+                {selected?.duration}분
+              </Badge>
             </div>
 
             {/* 메모 */}
-            {selected.memo && (
-              <div
-                style={{
-                  background: "#1A1A1A",
-                  borderRadius: "12px",
-                  padding: "16px",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "#39FF14",
-                    marginBottom: "6px",
-                    fontWeight: "600",
-                  }}
-                >
+            {selected?.memo && (
+              <div className="bg-[#1A1A1A] rounded-xl p-4 border border-white/6">
+                <p className="text-xs uppercase tracking-widest text-[#39FF14] font-semibold mb-2">
                   메모
                 </p>
-                <p
-                  style={{
-                    fontSize: "0.875rem",
-                    color: "#A0A0A0",
-                    lineHeight: 1.6,
-                  }}
-                >
+                <p className="text-sm text-[#A0A0A0] leading-relaxed">
                   {selected.memo}
                 </p>
               </div>
             )}
           </div>
-        </div>
-      )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
