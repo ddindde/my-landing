@@ -7,20 +7,24 @@ function WorkoutCard({ workout, onClick }) {
       onClick={onClick}
       style={{
         cursor: "pointer",
-        background: "white",
-        borderRadius: "20px",
+        background: "#111111",
+        borderRadius: "16px",
         padding: "24px",
-        border: "1px solid rgba(92,61,30,0.1)",
+        border: "1px solid rgba(255,255,255,0.08)",
         transition: "all 0.2s",
-        boxShadow: "0 2px 8px rgba(26,20,16,0.06)",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+        position: "relative",
+        overflow: "hidden",
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "translateY(-4px)";
-        e.currentTarget.style.boxShadow = "0 12px 32px rgba(26,20,16,0.12)";
+        e.currentTarget.style.borderColor = "rgba(57,255,20,0.3)";
+        e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.4)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "0 2px 8px rgba(26,20,16,0.06)";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+        e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
       }}
     >
       {/* 상단 날짜 + 이모지 */}
@@ -35,7 +39,7 @@ function WorkoutCard({ workout, onClick }) {
         <span
           style={{
             fontSize: "0.72rem",
-            color: "#C49A6C",
+            color: "#39FF14",
             letterSpacing: "0.08em",
             fontWeight: "500",
           }}
@@ -52,9 +56,8 @@ function WorkoutCard({ workout, onClick }) {
         style={{
           fontSize: "1.1rem",
           fontWeight: "700",
-          color: "#1A1410",
+          color: "#FFFFFF",
           marginBottom: "8px",
-          fontFamily: "'Noto Serif KR', serif",
         }}
       >
         {workout.title}
@@ -64,7 +67,7 @@ function WorkoutCard({ workout, onClick }) {
       <p
         style={{
           fontSize: "0.8rem",
-          color: "#8B5E3C",
+          color: "#A0A0A0",
           marginBottom: "20px",
           lineHeight: 1.6,
         }}
@@ -72,10 +75,10 @@ function WorkoutCard({ workout, onClick }) {
         {workout.exercises.map((e) => e.name).join(" · ")}
       </p>
 
-      {/* 구분선 */}
+      {/* 구분선 + 태그 */}
       <div
         style={{
-          borderTop: "1px solid rgba(92,61,30,0.08)",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
           paddingTop: "16px",
           display: "flex",
           gap: "8px",
@@ -84,11 +87,12 @@ function WorkoutCard({ workout, onClick }) {
         <span
           style={{
             fontSize: "0.72rem",
-            background: "#F5EFE6",
-            color: "#5C3D1E",
+            background: "rgba(57,255,20,0.1)",
+            color: "#39FF14",
             padding: "5px 12px",
-            borderRadius: "100px",
-            fontWeight: "500",
+            borderRadius: "6px",
+            fontWeight: "600",
+            border: "1px solid rgba(57,255,20,0.2)",
           }}
         >
           볼륨 {workout.volume.toLocaleString()}kg
@@ -96,11 +100,12 @@ function WorkoutCard({ workout, onClick }) {
         <span
           style={{
             fontSize: "0.72rem",
-            background: "#F5EFE6",
-            color: "#5C3D1E",
+            background: "rgba(255,255,255,0.05)",
+            color: "#A0A0A0",
             padding: "5px 12px",
-            borderRadius: "100px",
+            borderRadius: "6px",
             fontWeight: "500",
+            border: "1px solid rgba(255,255,255,0.08)",
           }}
         >
           {workout.duration}분
@@ -114,7 +119,13 @@ export default function WorkoutGrid() {
   const [selected, setSelected] = useState(null);
 
   return (
-    <section style={{ background: "#F5EFE6", padding: "80px 24px 60px" }}>
+    <section
+      style={{
+        background: "#0A0A0A",
+        padding: "80px 24px 60px",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* 헤더 */}
         <div style={{ marginBottom: "40px" }}>
@@ -123,25 +134,25 @@ export default function WorkoutGrid() {
               fontSize: "0.68rem",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "#C49A6C",
+              color: "#39FF14",
               marginBottom: "8px",
-              fontWeight: "500",
+              fontWeight: "600",
             }}
           >
             Muscle Archive
           </p>
           <h2
             style={{
-              fontFamily: "'Noto Serif KR', serif",
               fontSize: "2.4rem",
               fontWeight: "900",
-              color: "#1A1410",
+              color: "#FFFFFF",
               marginBottom: "8px",
+              letterSpacing: "-0.02em",
             }}
           >
             운동 기록
           </h2>
-          <p style={{ color: "#8B5E3C", fontSize: "0.9rem" }}>
+          <p style={{ color: "#A0A0A0", fontSize: "0.9rem" }}>
             카드를 클릭하면 상세 내용을 볼 수 있어요.
           </p>
         </div>
@@ -171,24 +182,25 @@ export default function WorkoutGrid() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(26,20,16,0.6)",
+            background: "rgba(0,0,0,0.85)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             zIndex: 50,
             padding: "16px",
-            backdropFilter: "blur(4px)",
+            backdropFilter: "blur(8px)",
           }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "white",
+              background: "#111111",
+              border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: "24px",
               padding: "32px",
               maxWidth: "440px",
               width: "100%",
-              boxShadow: "0 32px 64px rgba(26,20,16,0.2)",
+              boxShadow: "0 32px 64px rgba(0,0,0,0.6)",
             }}
           >
             {/* 모달 헤더 */}
@@ -215,8 +227,9 @@ export default function WorkoutGrid() {
                   <span
                     style={{
                       fontSize: "0.72rem",
-                      color: "#C49A6C",
-                      fontWeight: "500",
+                      color: "#39FF14",
+                      fontWeight: "600",
+                      letterSpacing: "0.05em",
                     }}
                   >
                     {selected.date}
@@ -226,8 +239,7 @@ export default function WorkoutGrid() {
                   style={{
                     fontSize: "1.3rem",
                     fontWeight: "700",
-                    color: "#1A1410",
-                    fontFamily: "'Noto Serif KR', serif",
+                    color: "#FFFFFF",
                   }}
                 >
                   {selected.title}
@@ -235,7 +247,7 @@ export default function WorkoutGrid() {
                 <p
                   style={{
                     fontSize: "0.82rem",
-                    color: "#8B5E3C",
+                    color: "#A0A0A0",
                     marginTop: "3px",
                   }}
                 >
@@ -245,13 +257,13 @@ export default function WorkoutGrid() {
               <button
                 onClick={() => setSelected(null)}
                 style={{
-                  background: "#F5EFE6",
-                  border: "none",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.1)",
                   width: "32px",
                   height: "32px",
-                  borderRadius: "50%",
+                  borderRadius: "8px",
                   fontSize: "1rem",
-                  color: "#8B5E3C",
+                  color: "#A0A0A0",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -269,9 +281,9 @@ export default function WorkoutGrid() {
                 fontSize: "0.65rem",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "#C49A6C",
+                color: "#39FF14",
                 marginBottom: "12px",
-                fontWeight: "500",
+                fontWeight: "600",
               }}
             >
               운동 목록
@@ -285,19 +297,19 @@ export default function WorkoutGrid() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "12px 0",
-                    borderBottom: "1px solid #F5EFE6",
+                    borderBottom: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
                   <span
                     style={{
                       fontSize: "0.9rem",
                       fontWeight: "600",
-                      color: "#1A1410",
+                      color: "#FFFFFF",
                     }}
                   >
                     {ex.name}
                   </span>
-                  <span style={{ fontSize: "0.82rem", color: "#8B5E3C" }}>
+                  <span style={{ fontSize: "0.82rem", color: "#A0A0A0" }}>
                     {ex.weight > 0 ? `${ex.weight}kg × ` : ""}
                     {ex.sets}세트 × {ex.reps}회
                   </span>
@@ -310,11 +322,12 @@ export default function WorkoutGrid() {
               <span
                 style={{
                   fontSize: "0.75rem",
-                  background: "#F5EFE6",
-                  color: "#5C3D1E",
+                  background: "rgba(57,255,20,0.1)",
+                  color: "#39FF14",
                   padding: "6px 14px",
-                  borderRadius: "100px",
-                  fontWeight: "500",
+                  borderRadius: "6px",
+                  fontWeight: "600",
+                  border: "1px solid rgba(57,255,20,0.2)",
                 }}
               >
                 총 볼륨 {selected.volume.toLocaleString()}kg
@@ -322,11 +335,11 @@ export default function WorkoutGrid() {
               <span
                 style={{
                   fontSize: "0.75rem",
-                  background: "#F5EFE6",
-                  color: "#5C3D1E",
+                  background: "rgba(255,255,255,0.05)",
+                  color: "#A0A0A0",
                   padding: "6px 14px",
-                  borderRadius: "100px",
-                  fontWeight: "500",
+                  borderRadius: "6px",
+                  border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
                 {selected.duration}분
@@ -337,10 +350,10 @@ export default function WorkoutGrid() {
             {selected.memo && (
               <div
                 style={{
-                  background: "#FAF7F2",
-                  borderRadius: "14px",
+                  background: "#1A1A1A",
+                  borderRadius: "12px",
                   padding: "16px",
-                  border: "1px solid rgba(92,61,30,0.08)",
+                  border: "1px solid rgba(255,255,255,0.06)",
                 }}
               >
                 <p
@@ -348,9 +361,9 @@ export default function WorkoutGrid() {
                     fontSize: "0.65rem",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#C49A6C",
+                    color: "#39FF14",
                     marginBottom: "6px",
-                    fontWeight: "500",
+                    fontWeight: "600",
                   }}
                 >
                   메모
@@ -358,7 +371,7 @@ export default function WorkoutGrid() {
                 <p
                   style={{
                     fontSize: "0.875rem",
-                    color: "#5C3D1E",
+                    color: "#A0A0A0",
                     lineHeight: 1.6,
                   }}
                 >

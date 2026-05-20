@@ -1,6 +1,7 @@
 import "./index.css";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Stats from "./components/Stats";
 import Features from "./components/Features";
 import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
@@ -12,12 +13,9 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <div className="section-divider">
-          <hr />
-        </div>
-        <WorkoutGrid />
-        <div className="section-divider">
-          <hr />
+        <Stats />
+        <div id="log">
+          <WorkoutGrid />
         </div>
         <Features />
         <CtaBand />
